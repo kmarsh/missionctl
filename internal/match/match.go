@@ -22,7 +22,7 @@ func IsID(text string) bool {
 }
 
 // Find returns an exact name match ignoring case, or else the one project whose
-// name contains query, so "acme" finds "Acme" even alongside "Acme Redesign". Partial
+// name contains query, so "apollo" finds "Apollo" even alongside "Apollo Guidance". Partial
 // matches look at enabled projects first, so an old disabled one doesn't get in the way.
 func Find(query string, projects []Project) (Project, error) {
 	needle := strings.ToLower(query)

@@ -37,7 +37,7 @@ api_key = "mc_..."
 missionctl projects
 
 # One project, by name or id
-missionctl projects show "Globex Portal"
+missionctl projects show "Gemini Mobile"
 ```
 
 ### Time entries
@@ -49,12 +49,12 @@ missionctl time
 # Today's, a date range, or one project's
 missionctl time --today
 missionctl time --from 2026-09-01 --to 2026-09-30
-missionctl time -p Acme
+missionctl time -p Apollo
 
 # Log time; the date defaults to today
-missionctl time log "Fixed the login form" -p Acme -d 1:30
-missionctl time log "Standup" -p "Globex Portal" -d 15 --date yesterday
-missionctl time log "Pro bono review" -p Acme -d 45m --no-billable
+missionctl time log "Fixed the login form" -p Apollo -d 1:30
+missionctl time log "Standup" -p "Gemini Mobile" -d 15 --date yesterday
+missionctl time log "Pro bono review" -p Apollo -d 45m --no-billable
 
 # Change an entry; only the options given change
 missionctl time edit ENTRY_ID -d "2 hrs" -m "Pairing on the login form"
