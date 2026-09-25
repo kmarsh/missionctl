@@ -40,10 +40,13 @@ homebrew_casks:
       name: Kevin Marsh
       email: kevin.marsh@gmail.com
     # The binaries aren't signed or notarized, so clear the quarantine flag
-    # Homebrew's download sets, or macOS refuses to run them.
-    hooks:
-      post:
-        install: |
-          if OS.mac?
-            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/missionctl"]
-          end
+    # Homebrew's download sets, or macOS refuses to run them. Written as
+    # postflight_steps by hand because GoReleaser's hooks emit `postflight`,
+    # which Homebrew 7 deprecates with a warning on every brew command. The
+    # cask is itself a Go template, so {{staged_path}} is escaped to survive it.
+    custom_block: |
+      postflight_steps do
+        on_macos do
+          run "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "{{ "{{staged_path}}" }}/missionctl"]
+        end
+      end
