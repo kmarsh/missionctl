@@ -134,9 +134,9 @@ func (a *app) timeLogCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   `log "DESCRIPTION" -d DURATION`,
 		Short: "Log a time entry",
-		Example: `  missionctl time log "Fixed the login form" --project Rev --duration 1:30
-  missionctl time log "Standup" -p "Vintage Aerial" -d 15 --date yesterday
-  missionctl time log "Client call" -p Rev -d "1 hour 20 min"`,
+		Example: `  missionctl time log "Fixed the login form" --project Apollo --duration 1:30
+  missionctl time log "Standup" -p "Gemini Mobile" -d 15 --date yesterday
+  missionctl time log "Client call" -p Apollo -d "1 hour 20 min"`,
 		Args: cobra.ExactArgs(1),
 		RunE: func(_ *cobra.Command, args []string) error {
 			minutes, err := minutesFrom(length)
@@ -275,7 +275,7 @@ func minutesFrom(text string) (int, error) {
 	return minutes, nil
 }
 
-// reportEntry prints the entry as JSON, or as "<verb> 1:30 on Fri, Sep 25 to ● Rev: ...".
+// reportEntry prints the entry as JSON, or as "<verb> 1:30 on Fri, Sep 25 to ● Apollo: ...".
 func (a *app) reportEntry(verb string, entry map[string]any) error {
 	out := a.output()
 	if out.json {
@@ -311,7 +311,7 @@ func (a *app) entryRow(out output, entry map[string]any) []string {
 	}
 }
 
-// oneLine is "1:30 on Fri, Sep 25 to ● Rev: Fixed the login form (id)".
+// oneLine is "1:30 on Fri, Sep 25 to ● Apollo: Fixed the login form (id)".
 func (a *app) oneLine(out output, entry map[string]any) string {
 	line := fmt.Sprintf("%s on %s to %s", entryDuration(entry), dates.Humanize(str(entry, "date"), a.now()), a.projectName(out, entry))
 	if description := summary(str(entry, "description"), 60); description != "" {

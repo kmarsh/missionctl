@@ -30,15 +30,46 @@ api_key = "mc_..."
 
 ## Usage
 
+### Projects
+
 ```bash
-missionctl projects                      # enabled projects; --all or --disabled for more
-missionctl projects show "Vintage Aerial"
-missionctl time                          # this week's entries; --today, --from/--to, -p PROJECT
-missionctl time log "Fixed the login form" -p Rev -d 1:30 [--date yesterday] [--no-billable]
-missionctl time log "Standup" -p "Vintage Aerial" -d 15
-missionctl time edit ENTRY_ID -d "2 hrs" -m "New description"
+# Enabled projects (add --all or --disabled for the rest)
+missionctl projects
+
+# One project, by name or id
+missionctl projects show "Gemini Mobile"
+```
+
+### Time entries
+
+```bash
+# This week's entries, from Monday
+missionctl time
+
+# Today's, a date range, or one project's
+missionctl time --today
+missionctl time --from 2026-09-01 --to 2026-09-30
+missionctl time -p Apollo
+
+# Log time; the date defaults to today
+missionctl time log "Fixed the login form" -p Apollo -d 1:30
+missionctl time log "Standup" -p "Gemini Mobile" -d 15 --date yesterday
+missionctl time log "Pro bono review" -p Apollo -d 45m --no-billable
+
+# Change an entry; only the options given change
+missionctl time edit ENTRY_ID -d "2 hrs" -m "Pairing on the login form"
+
+# Show or delete an entry (delete asks first; --yes skips that)
 missionctl time show ENTRY_ID
-missionctl time delete ENTRY_ID          # asks first; --yes to skip
+missionctl time delete ENTRY_ID
+```
+
+### Scripting
+
+```bash
+# Hours per project this month
+missionctl time --from "$(date +%Y-%m-01)" --json \
+  | jq -r 'group_by(.project.name)[] | "\(.[0].project.name): \(map(.minutes) | add / 60) h"'
 ```
 
 In a terminal it prints tables. Piped, or with `--json`, it prints the API's JSON (an array for
