@@ -64,3 +64,7 @@ git tag -a v0.3.0 -m "missionctl 0.3.0" && git push origin v0.3.0
 
 The workflow needs a `HOMEBREW_TAP_GITHUB_TOKEN` secret: a fine-grained token with contents
 write access to kmarsh/homebrew-tap.
+
+## License
+
+[MIT](LICENSE)
